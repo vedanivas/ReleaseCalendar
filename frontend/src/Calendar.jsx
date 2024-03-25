@@ -1,66 +1,44 @@
 import React from 'react';
 import { useState } from 'react'
-import { Badge, Calendar } from 'antd';
+import { Badge, Calendar, Tag, Popover, App } from 'antd';
+import { ChromeFilled } from '@ant-design/icons';
 import './Calendar.css'
+
+const mp = new Map([
+  ["alpha", "#6d32a8"],
+  ["beta", "#2db7f5"],
+  ["stable", "green"],
+])
+
+const content = <div><ChromeFilled /> v122.0.6261.139</div>
+
+const showReleaseDetails = () => {
+  console.log('showReleaseDetails')
+}
 
 const getListData = (value) => {
   let listData;
   switch (value.date()) {
-    case 8:
+    case 7:
       listData = [
         {
-          type: 'warning',
-          content: 'This is warning.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event.',
-        },
-      ];
+          type: "alpha"
+        }
+      ]
       break;
-    case 10:
+    case 13:
       listData = [
         {
-          type: 'warning',
-          content: 'This is warning.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event.',
-        },
-      ];
+          type: "beta"
+        }
+      ]
       break;
-    case 15:
+    case 20:
       listData = [
         {
-          type: 'warning',
-          content: 'This is warning',
-        },
-        {
-          type: 'success',
-          content: 'This is very long usual event......',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 1.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 2.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 3.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 4.',
-        },
-      ];
+          type: "stable"
+        }
+      ]
       break;
     default:
   }
@@ -71,7 +49,7 @@ const getMonthData = (value) => {
     return 1394;
   }
 };
-const App = () => {
+const CalendarApp = () => {
   const monthCellRender = (value) => {
     const num = getMonthData(value);
     return num ? (
@@ -86,9 +64,9 @@ const App = () => {
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
+          <Popover title={`v30.0.0.${item.type}`} content={content} arrow={false}>
+            <Tag color={mp.get(item.type)} onClick={showReleaseDetails}>{item.type}</Tag>
+          </Popover>
         ))}
       </ul>
     );
@@ -101,4 +79,4 @@ const App = () => {
   return <Calendar cellRender={cellRender} />;
 };
 
-export default App;
+export default CalendarApp;
