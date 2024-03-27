@@ -32,7 +32,7 @@ const CalendarApp = () => {
     async function fetchDates() {
         try {
             const response = await
-                axios.get("https://chromiumdash.appspot.com/fetch_milestone_schedule?offset=-1&n=4", {});
+                axios.get("https://chromiumdash.appspot.com/fetch_milestone_schedule?offset=0&n=5", {});
             setMstones(formatData(response.data.mstones))
             setLoading(false);
             return "success";
